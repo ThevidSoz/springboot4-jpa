@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.example.demo.entities.Category;
+import com.example.demo.entities.Product;
 import com.example.demo.entities.Order;
 import com.example.demo.entities.User;
 import com.example.demo.entities.enums.OrderStatus;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.OrderRepository;
+import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.UserRepository;
 
 @Configuration
@@ -29,6 +31,9 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
+	@Autowired
+	private ProductRepository productRepository;
+
 	TestConfig(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -40,7 +45,14 @@ public class TestConfig implements CommandLineRunner {
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
 
+		Product p1 = new Product(null, "Macbook Air", "Lorem ipsum dolor sit amet, consectetur.", 690.5, "");
+		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Product p5 = new Product(null, "Samsung Galaxy S24", "Cras fringilla convallis sem vel faucibus.", 400.99, "");
+
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
