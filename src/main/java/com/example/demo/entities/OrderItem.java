@@ -14,10 +14,10 @@ import jakarta.persistence.Table;
 public class OrderItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@EmbeddedId
-	private OrderItemPk id;
-	
+	private OrderItemPk id = new OrderItemPk();
+
 	private Integer quantity;
 	private Double price;
 
