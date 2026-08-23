@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
@@ -16,6 +17,7 @@ import com.example.demo.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService {
 
 	@Autowired
@@ -30,10 +32,12 @@ public class UserService {
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
+	@Transactional
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
@@ -44,6 +48,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional
 	public User update(Long id, User obj) {
 		try {
 			User entity = repository.getReferenceById(id);
@@ -52,7 +57,6 @@ public class UserService {
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
-
 	}
 
 	private void updateData(User entity, User obj) {

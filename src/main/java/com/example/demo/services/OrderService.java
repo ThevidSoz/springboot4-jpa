@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entities.Order;
 import com.example.demo.repositories.OrderRepository;
+import com.example.demo.services.exception.ResourceNotFoundException;
 
 @Service
+@Transactional(readOnly = true)
 public class OrderService {
 
 	@Autowired
@@ -21,6 +24,6 @@ public class OrderService {
 
 	public Order findById(Long id) {
 		Optional<Order> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 }
